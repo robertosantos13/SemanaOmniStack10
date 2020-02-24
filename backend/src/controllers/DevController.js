@@ -8,12 +8,12 @@ module.exports = {
         return response.json(dev);
     },
     async store(request, response) {
-        const { github_usename, techs, latitude, longitude } = request.body;
+        const { github_username, techs, latitude, longitude } = request.body;
 
-        let dev = await Dev.findOne({ github_usename });
+        let dev = await Dev.findOne({ github_username });
 
         if (!dev) {
-            const apiResponse = await axios.get(`https://api.github.com/users/${github_usename}`);
+            const apiResponse = await axios.get(`https://api.github.com/users/${github_username}`);
 
             const { name = login, avatar_url, bio } = apiResponse.data;
 
@@ -25,7 +25,7 @@ module.exports = {
             }
 
             dev = await Dev.create({
-                github_usename,
+                github_username,
                 name,
                 avatar_url,
                 bio,
